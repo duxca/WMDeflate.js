@@ -1,0 +1,52 @@
+<script src="./WMDeflate.js/release/WMDeflate.min.js"></script>
+<script src="./WMDeflate.js/vender/js-deflate/rawdeflate.js"></script>
+<script src="./WMDeflate.js/vender/js-deflate/rawinflate.js"></script>
+<script src="./WMDeflate.js/vender/js-deflate/test/base64.js"></script>
+<script src="./UTF8.js/lib/UTF8.js"></script>
+<script src="./DataType.js/lib/DataType.js"></script>
+<script src="./Base64.js/lib/Base64.js"></script>
+<script>
+if (!String.fromCodePoint) {
+    /*!
+    * ES6 Unicode Shims 0.1
+    * (c) 2012 Steven Levithan <http://slevithan.com/>
+    * MIT License
+    */
+    String.fromCodePoint = function fromCodePoint () {
+        var chars = [], point, offset, units, i;
+        for (i = 0; i < arguments.length; ++i) {
+            point = arguments[i];
+            offset = point - 0x10000;
+            units = point > 0xFFFF ? [0xD800 + (offset >> 10), 0xDC00 + (offset & 0x3FF)] : [point];
+            chars.push(String.fromCharCode.apply(null, units));
+        }
+        return chars.join("");
+    }
+}
+
+var str = "";
+
+for(var i=0x0000; i < 0x5000; i++){
+  str += String.fromCodePoint(i);
+}
+
+//console.log(str)//String
+var a = UTF8.fromString(str);
+var b = Base64.utob(str);
+console.log(a === b);//UTF8OctetString
+var c = WMDeflate.deflate(a);
+var d = RawDeflate.deflate(b);
+console.log(c === d);//UTF8OctetString
+var e = Base64.toBase64(c);
+var f = Base64_.btoa(UTF8.fromString(d));
+console.log(e === f);//Base64String
+var g = Base64.fromBase64(e)
+var h = UTF8.toString(Base64_.atob(f));
+console.log(g === h && c === g && d === h);//UTF8OctetString
+var i = RawDeflate.inflate(g);
+var j = WMDeflate.inflate(h);
+console.log(i === j && a === i && b === j);//UTF8OctetString
+var k = Base64.btou(i);
+var l = UTF8.toString(j);
+console.log(k === l && l === str);//String
+</script>
