@@ -1,6 +1,6 @@
 {
   "name":           "duxca.wmdeflate.js",
-  "version":        "0.0.1",
+  "version":        "0.0.2",
   "description":    "Module description.",
   "url":            "https://github.com/duxca/WMDeflate.js",
   "keywords":       ["duxca", "WebModule", "Unstable"],
