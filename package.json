@@ -35,12 +35,10 @@
     "label":        ["@dev", "@deflate", "@inflate"],
     "module": {
       "develop":    ["uupaa.valid.js"],
-      "release":    ["uupaa.base64.js", "uupaa.utf8.js"]
+      "release":    []
     }
   },
   "dependencies": {
-    "uupaa.base64.js": "",
-    "uupaa.utf8.js": ""
   },
   "devDependencies": {
     "uupaa.nodemodule.js": "",
